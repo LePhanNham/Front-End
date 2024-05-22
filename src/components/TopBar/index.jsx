@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -10,20 +18,15 @@ function TopBar() {
   const [userName, setUserName] = useState("");
   const user_name = localStorage.getItem("user_name");
   useEffect(() => {
-    console.log("Pathname:", pathname);
     const fetchData = async () => {
       try {
-        // Extract userId from pathname
         const userId = getUserIdFromPathname(pathname);
-        console.log("User Id:", userId);
         if (userId) {
           const response = await axios.get(
-            `https://9mlf5s-8081.csb.app/api/user/${userId}`
+            `https://hgcwj3-8081.csb.app/api/user/${userId}`,
           );
-          console.log("User data:", response.data);
           setUserName(response.data.user_name);
         } else {
-          // Set userName to null or another value if pathname contains "/photos/"
           setUserName(null);
         }
       } catch (error) {
@@ -36,12 +39,13 @@ function TopBar() {
 
   const getUserIdFromPathname = (pathname) => {
     const parts = pathname.split("/");
-    console.log("Parts:", parts);
-    const userIdIndex = parts.findIndex((part) => part === "users" || part === "photos");
+    const userIdIndex = parts.findIndex(
+      (part) => part === "users" || part === "photos",
+    );
     if (userIdIndex !== -1 && userIdIndex + 1 < parts.length) {
       return parts[userIdIndex + 1];
     }
-    
+
     return null;
   };
 
@@ -61,18 +65,25 @@ function TopBar() {
   }
 
   return (
-    <AppBar className="topbar-appBar" position="absolute">
+    <AppBar position="static">
       <Toolbar>
-        { user_name && (
-          <Typography variant="h6" color="inherit">
-            Xin chào {user_name}
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {appContext}
+        </Typography>
+        {user_name && (
+          <Typography variant="h6" color="inherit" sx={{ mr: 2 }}>
+            Xin chào, {user_name}
           </Typography>
         )}
-        <Box sx={{ flexGrow: 1, textAlign: "center" }}>
-          <Typography variant="h6" color="inherit">
-            {appContext}
-          </Typography>
-        </Box>
         <Button color="inherit" onClick={handleLogout}>
           Đăng xuất
         </Button>
