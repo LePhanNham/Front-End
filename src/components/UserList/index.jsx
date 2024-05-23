@@ -27,7 +27,7 @@ function UserList() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "https://hgcwj3-8081.csb.app/api/user/list",
+          "https://gwc4mh-8081.csb.app/api/user/list",
         );
         let fetchedUsers = response.data.users;
 

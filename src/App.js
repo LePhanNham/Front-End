@@ -1,3 +1,5 @@
+import "./App.css";
+
 import React, { useEffect } from "react";
 import { Grid, Paper } from "@mui/material";
 import {
@@ -15,6 +17,31 @@ import UserPhotos from "./components/UserPhotos";
 import Login from "./components/Login";
 import Register from "./components/Register"; // Import Register component
 
+const Home = () => (
+  <div>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <TopBar />
+      </Grid>
+      <div className="main-topbar-buffer" />
+      <Grid item sm={3}>
+        <Paper className="main-grid-item">
+          <UserList />
+        </Paper>
+      </Grid>
+      <Grid item sm={9}>
+        <Paper className="main-grid-item">
+          <Routes>
+            <Route path="/users/:userId" element={<UserDetail />} />
+            <Route path="/photos/:userId" element={<UserPhotos />} />
+            <Route path="/users" element={<UserList />} />
+          </Routes>
+        </Paper>
+      </Grid>
+    </Grid>
+  </div>
+);
+
 const App = () => {
   const location = useLocation();
 
@@ -30,25 +57,11 @@ const App = () => {
   }, [location]);
 
   return (
-    <>
-      <TopBar />
-      <Grid container spacing={2} style={{ marginTop: 64 }}>
-        <Grid item sm={3}>
-          <Paper className="main-grid-item">
-            <UserList />
-          </Paper>
-        </Grid>
-        <Grid item sm={9}>
-          <Paper className="main-grid-item">
-            <Routes>
-              <Route path="/users/:userId" element={<UserDetail />} />
-              <Route path="/photos/:userId" element={<UserPhotos />} />
-              <Route path="/users" element={<UserList />} />
-            </Routes>
-          </Paper>
-        </Grid>
-      </Grid>
-    </>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/*" element={<Home />} />
+    </Routes>
   );
 };
 

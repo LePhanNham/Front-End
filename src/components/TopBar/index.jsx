@@ -23,7 +23,7 @@ function TopBar() {
         const userId = getUserIdFromPathname(pathname);
         if (userId) {
           const response = await axios.get(
-            `https://hgcwj3-8081.csb.app/api/user/${userId}`,
+            `https://gwc4mh-8081.csb.app/api/user/${userId}`,
           );
           setUserName(response.data.user_name);
         } else {

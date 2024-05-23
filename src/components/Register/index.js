@@ -10,6 +10,7 @@ import {
   Container,
   CssBaseline,
   InputAdornment,
+  Alert,
 } from "@mui/material";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import AccountCircle from "@mui/icons-material/AccountCircle";
@@ -26,13 +27,22 @@ export default function Register() {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [occupation, setOccupation] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null); // Reset error state
+
+    // Validate form fields
+    if (!user_name || !password || !location || !description || !occupation) {
+      setError("Điền đủ chưa mà đăng kí vậy?");
+      return;
+    }
+
     try {
       const response = await axios.post(
-        "https://hgcwj3-8081.csb.app/api/user/register",
+        "https://gwc4mh-8081.csb.app/api/user/register",
         {
           user_name,
           password,
@@ -44,9 +54,11 @@ export default function Register() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user_id", response.data._id);
       localStorage.setItem("user_name", response.data.user_name);
-      navigate("/");
+      navigate("/login");
     } catch (error) {
-      console.error("Đăng ký thất bại:", error);
+      if (error.response) {
+        setError("Tài khoản đã tồn tại. Vui lòng thử tên đăng nhập khác.");
+      }
     }
   };
 
@@ -86,6 +98,7 @@ export default function Register() {
             noValidate
             sx={{ mt: 3 }}
           >
+            {error && <Alert severity="error">{error}</Alert>}
             <TextField
               margin="normal"
               required

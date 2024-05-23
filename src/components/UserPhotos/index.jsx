@@ -30,7 +30,7 @@ const UserPhotos = () => {
     const fetchPhotos = async () => {
       try {
         const response = await axios.get(
-          `https://hgcwj3-8081.csb.app/api/photo/photosOfUser/${userId}`,
+          `https://gwc4mh-8081.csb.app/api/photo/photosOfUser/${userId}`,
         );
         setPhotos(response.data);
         setError(null);
@@ -57,7 +57,7 @@ const UserPhotos = () => {
       const token = localStorage.getItem("token");
 
       const response = await axios.post(
-        `https://hgcwj3-8081.csb.app/api/photo/${photoId}/comments`,
+        `https://gwc4mh-8081.csb.app/api/photo/${photoId}/comments`,
         { comment: commentText, user_id: userId, user_name: userName },
         {
           headers: {
@@ -95,7 +95,7 @@ const UserPhotos = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        `https://hgcwj3-8081.csb.app/api/photo/uploadPhoto`,
+        `https://gwc4mh-8081.csb.app/api/photo/uploadPhoto`,
         formData,
         {
           headers: {
@@ -180,7 +180,7 @@ const Photo = ({
           <strong>Ngày đăng:</strong> {new Date(date_time).toLocaleString()}
         </Typography>
         <img
-          src={`https://hgcwj3-8081.csb.app/uploads/${file_name}`}
+          src={`https://gwc4mh-8081.csb.app/uploads/${file_name}`}
           alt="Ảnh"
           style={{
             maxWidth: "100%",

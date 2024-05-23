@@ -18,17 +18,18 @@ import VpnKey from "@mui/icons-material/VpnKey";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+// Khởi tạo component Login
 export default function Login() {
   const [user_name, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
-
+  // XỬ lý submit
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "https://hgcwj3-8081.csb.app/api/user/login",
+        "https://gwc4mh-8081.csb.app/api/user/login",
         { user_name, password },
       );
       localStorage.setItem("token", response.data.token);

@@ -12,7 +12,7 @@ function UserDetail() {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `https://hgcwj3-8081.csb.app/api/user/${userId}`,
+          `https://gwc4mh-8081.csb.app/api/user/${userId}`,
         );
         setUser(response.data);
       } catch (error) {
