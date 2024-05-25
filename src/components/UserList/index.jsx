@@ -63,7 +63,7 @@ function UserList() {
               alignItems="flex-start"
               style={{
                 backgroundColor:
-                  user._id === loggedInUserId ? "#ffeb3b" : "inherit",
+                  user._id === loggedInUserId ? "#ccc" : "inherit",
               }}
             >
               <ListItemAvatar>

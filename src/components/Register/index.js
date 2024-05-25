@@ -28,6 +28,7 @@ export default function Register() {
   const [description, setDescription] = useState("");
   const [occupation, setOccupation] = useState("");
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null); // State for success message
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -35,7 +36,7 @@ export default function Register() {
     setError(null); // Reset error state
 
     // Validate form fields
-    if (!user_name || !password || !location || !description || !occupation) {
+    if (!user_name || !password || !location || !occupation) {
       setError("Điền đủ chưa mà đăng kí vậy?");
       return;
     }
@@ -54,7 +55,10 @@ export default function Register() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user_id", response.data._id);
       localStorage.setItem("user_name", response.data.user_name);
-      navigate("/login");
+      setSuccess("Đăng ký thành công!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000); // Redirect after 3 seconds
     } catch (error) {
       if (error.response) {
         setError("Tài khoản đã tồn tại. Vui lòng thử tên đăng nhập khác.");
@@ -99,6 +103,7 @@ export default function Register() {
             sx={{ mt: 3 }}
           >
             {error && <Alert severity="error">{error}</Alert>}
+            {success && <Alert severity="success">{success}</Alert>}
             <TextField
               margin="normal"
               required
@@ -157,10 +162,9 @@ export default function Register() {
             />
             <TextField
               margin="normal"
-              required
               fullWidth
               id="description"
-              label="Mô tả"
+              label="Mô tả (Không bắt buộc)"
               name="description"
               autoComplete="description"
               value={description}

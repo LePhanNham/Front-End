@@ -17,6 +17,7 @@ import {
 import { deepOrange } from "@mui/material/colors";
 
 const UserPhotos = () => {
+  // khai báo các state lưu trữ thông tin
   const { userId } = useParams();
   const loggedInUserId = localStorage.getItem("user_id");
   const [photos, setPhotos] = useState([]);
@@ -29,6 +30,7 @@ const UserPhotos = () => {
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
+        // get photo of
         const response = await axios.get(
           `https://gwc4mh-8081.csb.app/api/photo/photosOfUser/${userId}`,
         );
@@ -45,11 +47,11 @@ const UserPhotos = () => {
 
     fetchPhotos();
   }, [userId]);
-
+  // xử lý thay đổi về mặt hiển thị cmt
   const handleCommentChange = (event) => {
     setCommentText(event.target.value);
   };
-
+  // xử lý submit cmt
   const handleCommentSubmit = async (photoId) => {
     try {
       const userId = localStorage.getItem("user_id");

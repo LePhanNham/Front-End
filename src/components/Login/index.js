@@ -22,11 +22,19 @@ import axios from "axios";
 export default function Login() {
   const [user_name, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(""); // State for success message
   const navigate = useNavigate();
-  // XỬ lý submit
+
+  // Xử lý submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!user_name || !password) {
+      setError("Tên đăng nhập và mật khẩu không được để trống");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://gwc4mh-8081.csb.app/api/user/login",
@@ -35,10 +43,13 @@ export default function Login() {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user_id", response.data._id);
       localStorage.setItem("user_name", response.data.user_name);
-      setError(false); // Reset error state if login is successful
-      navigate("/");
+      setError(""); // Reset error state if login is successful
+      setSuccess("Đăng nhập thành công!"); // Set success message
+      setTimeout(() => {
+        navigate("/");
+      }, 2000); // Redirect after 2 seconds
     } catch (error) {
-      setError(true); // Show error alert if login fails
+      setError("Tài khoản hoặc mật khẩu không đúng");
       console.error("Đăng nhập thất bại:", error);
     }
   };
@@ -81,7 +92,12 @@ export default function Login() {
           </Typography>
           {error && (
             <Alert severity="error" sx={{ mt: 2, width: "100%" }}>
-              Tài khoản hoặc mật khẩu không đúng
+              {error}
+            </Alert>
+          )}
+          {success && (
+            <Alert severity="success" sx={{ mt: 2, width: "100%" }}>
+              {success}
             </Alert>
           )}
           <Box
